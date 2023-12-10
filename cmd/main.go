@@ -7,13 +7,12 @@ import (
 )
 
 func main() {
-	router :=gin.Default()
+	router := gin.Default()
 
-	// Initialize config
-
+	//initialize config
 	app := api.Config{Router: router}
 
-	// routes
+	//routes
 	app.Routes()
 
 	router.Run(":8000")

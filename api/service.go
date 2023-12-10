@@ -16,6 +16,7 @@ func (app *Config) twilioSendOTP(phoneNumber string) (string, error) {
 	params := &twilioApi.CreateVerificationParams{}
 	params.SetTo(phoneNumber)
 	params.SetChannel("sms")
+
 	resp, err := client.VerifyV2.CreateVerification(envSERVICESID(), params)
 	if err != nil {
 		return "", err
@@ -33,8 +34,12 @@ func (app *Config) twilioVerifyOTP(phoneNumber string, code string) error {
 	if err != nil {
 		return err
 	}
+
+	// BREAKING CHANGE IN THE VERIFY API
+	// https://www.twilio.com/docs/verify/quickstarts/verify-totp-change-in-api-response-when-authpayload-is-incorrect
 	if *resp.Status != "approved" {
 		return errors.New("not a valid code")
 	}
+
 	return nil
 }
