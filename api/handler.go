@@ -2,11 +2,16 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"time"
+
+	"github.com/kristiyankiryakov/go-sms-verify/data"
 
 	"github.com/gin-gonic/gin"
-	"github.com/kristiyankiryakov/go-sms-verify/data"
 )
+
+const appTimeout = time.Second * 10
 
 func (app *Config) sendSMS() gin.HandlerFunc {
 	return func(c *gin.Context) {
